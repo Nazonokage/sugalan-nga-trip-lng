@@ -1,0 +1,112 @@
+[
+  {
+    "id": "vid1",
+    "title": "Battle of the Birds",
+    "genre": "Cockfighting",
+    "file": "Battle of the birds Peacock Vs Rooster (720 X 1280).mp4",
+    "views": 18720,
+    "isLive": false,
+    "duration": "3:45",
+    "uploadDate": "2025-07-24",
+    "description": "Epic cockfight between a rooster and peacock - rare bird battle footage"
+  },
+  {
+    "id": "vid2",
+    "title": "Coco Attaque de Coq",
+    "genre": "Cockfighting", 
+    "file": "Coco attaque de coq CHICKENS ATTACK (720 X 1280).mp4",
+    "views": 5420,
+    "isLive": false,
+    "duration": "2:30",
+    "uploadDate": "2025-07-29",
+    "description": "Aggressive rooster attack compilation - intense cockfight moments"
+  },
+  {
+    "id": "vid3",
+    "title": "Tekken 8 — Fate Khan vs XO",
+    "genre": "Esports",
+    "file": "FATE KHAN (Leroy) vs XO (Lidia) CEO 2025 - Tekken 8 Pool Day 2 (720 X 1280 60fps).mp4",
+    "views": 94120,
+    "isLive": true,
+    "duration": "15:42",
+    "uploadDate": "2025-07-16",
+    "description": "CEO 2025 Tekken 8 tournament - Fate Khan (Leroy) vs XO (Lidia) pool match"
+  },
+  {
+    "id": "vid4",
+    "title": "Gilas Pilipinas vs Macau",
+    "genre": "Sports",
+    "file": "GILAS PILIPINAS VS MACAU BLACK BEARS FULL GAME HIGHLIGHTS 2025 GILAS SEND-OFF SHOWDOWN JULY 28 (720 X 1280).mp4",
+    "views": 143220,
+    "isLive": true,
+    "duration": "8:15",
+    "uploadDate": "2025-07-29",
+    "description": "Gilas Pilipinas send-off game highlights against Macau Black Bears"
+  },
+  {
+    "id": "vid5",
+    "title": "Vissel Kobe vs FC Barcelona",
+    "genre": "Sports",
+    "file": "HIGHLIGHTS VISSEL KOBE 1 vs 3 FC BARCELONA ASIAN TOUR 2025 ️ (720 X 1280).mp4",
+    "views": 287650,
+    "isLive": false,
+    "duration": "6:30",
+    "uploadDate": "2025-07-29",
+    "description": "FC Barcelona Asian Tour 2025 - Match highlights vs Vissel Kobe (3-1)"
+  },
+  {
+    "id": "vid6",
+    "title": "Crazy Horse Race Recovery",
+    "genre": "Sports",
+    "file": "HOW DID HE WIN FROM THERE Crazy horse race sees Bone Marra make an amazing recovery on debut (1080 X 1920).mp4",
+    "views": 76540,
+    "isLive": false,
+    "duration": "4:20",
+    "uploadDate": "2025-07-29",
+    "description": "Incredible horse racing comeback - Bone Marra's amazing debut recovery win"
+  },
+  {
+    "id": "vid7",
+    "title": "Football Legends Charity Game",
+    "genre": "Sports",
+    "file": "INIESTA, HENRY, ISHOWSPEED FOOTBALL LEGENDS AND INFLUENCERS CHARITY GAME 2025 (720 X 1280 60fps).mp4",
+    "views": 1250000,
+    "isLive": false,
+    "duration": "18:45",
+    "uploadDate": "2025-07-29",
+    "description": "Star-studded charity match featuring Iniesta, Henry, IShowSpeed and other legends"
+  },
+  {
+    "id": "vid8",
+    "title": "Red Bulls vs Inter Miami",
+    "genre": "Sports",
+    "file": "New York Red Bulls vs. Inter Miami CF Full Match Highlights Messi TWO Goals (720 X 1280 60fps).mp4",
+    "views": 890430,
+    "isLive": false,
+    "duration": "9:15",
+    "uploadDate": "2025-07-29",
+    "description": "Messi scores twice! Full match highlights from MLS showdown"
+  },
+  {
+    "id": "vid9",
+    "title": "Pacquiao vs Barrios",
+    "genre": "Sports",
+    "file": "Pacquiao vs Barrios HIGHLIGHTS July 19, 2025 PBC PPV on Prime Video (720 X 1280 60fps).mp4",
+    "views": 567890,
+    "isLive": false,
+    "duration": "5:50",
+    "uploadDate": "2025-07-29",
+    "description": "Boxing legend Pacquiao returns - Fight highlights vs Barrios"
+  },
+  {
+    "id": "vid11",
+    "title": "T1 vs GEN — LCK Highlights",
+    "genre": "Esports",
+    "file": "T1 vs GEN Highlights ALL GAMES LCK 2025 T1 vs Gen.G (720 X 1280 60fps).mp4",
+    "views": 534210,
+    "isLive": false,
+    "duration": "42:30",
+    "uploadDate": "2025-07-29",
+    "description": "Complete series highlights - T1 vs Gen.G LCK 2025 championship match"
+  }
+]
