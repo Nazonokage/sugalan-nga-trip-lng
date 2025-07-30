@@ -5,31 +5,38 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = ({ tabs }) => {
   const navigate = useNavigate();
   const defaultTabs = ['Sportsbook', 'Live now', 'Casino', 'Pre-match', 'Promotions'];
-
   const activeTabs = tabs || defaultTabs;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center px-12 py-6 border-b border-gray-700 backdrop-blur-sm bg-zinc-900/80 z-[100] text-lg">
-      <div className="flex gap-10 uppercase font-semibold tracking-wide">
-        {activeTabs.map((tab, i) => (
-          <div
-            key={i}
-            className="relative group cursor-pointer text-gray-300 hover:text-white transition"
-            onClick={() => {
-              if (tab === 'Sportsbook') navigate('/');
-              if (tab === 'Live now') navigate('/videos');
-            }}
-          >
-            <span className={tab === 'Live now' ? 'text-orange-400' : ''}>
-              {tab}
-            </span>
-            <span className={`absolute bottom-[-6px] left-0 w-0 h-[2px] bg-orange-400 transition-all duration-300 group-hover:w-full ${
-              tab === 'Live now' ? 'w-full' : ''
-            }`}></span>
-          </div>
-        ))}
+    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center px-12 py-4 border-b border-gray-700 backdrop-blur-sm bg-zinc-900/80 z-[100] text-lg">
+      {/* Logo and Navigation */}
+      <div className="flex items-center gap-10">
+        <div 
+          className="text-2xl font-bold text-orange-400 cursor-pointer"
+          onClick={() => navigate('/')}
+        >
+          🎰 BetFlix
+        </div>
+        
+        <div className="flex gap-8 uppercase font-semibold tracking-wide">
+          {activeTabs.map((tab, i) => (
+            <div
+              key={i}
+              className="relative group cursor-pointer text-gray-300 hover:text-white transition"
+              onClick={() => {
+                if (tab === 'Sportsbook') navigate('/');
+                if (tab === 'Live now') navigate('/videos');
+                if (tab === 'Casino') navigate('/streaming/vid-hacked');
+              }}
+            >
+              <span>{tab}</span>
+              <span className={`absolute bottom-[-6px] left-0 w-0 h-[2px] bg-orange-400 transition-all duration-300 group-hover:w-full`}></span>
+            </div>
+          ))}
+        </div>
       </div>
 
+      {/* Search and Menu */}
       <div className="flex items-center gap-6">
         <div className="relative">
           <input

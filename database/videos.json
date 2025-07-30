@@ -8,18 +8,84 @@
     "isLive": false,
     "duration": "3:45",
     "uploadDate": "2025-07-24",
-    "description": "Epic cockfight between a rooster and peacock - rare bird battle footage"
+    "description": "Epic cockfight between a rooster and peacock - rare bird battle footage",
+    "contestants": [
+      {
+        "name": "Peacock",
+        "color": "#4B0082",
+        "weight": "5.2kg",
+        "winRate": "68%"
+      },
+      {
+        "name": "Rooster",
+        "color": "#B22222",
+        "weight": "4.8kg",
+        "winRate": "72%"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Peacock": 2.8,
+          "Rooster": 1.9
+        }
+      },
+      {
+        "type": "Time to Knockout",
+        "options": [
+          {"name": "Under 2 minutes", "odds": 3.5},
+          {"name": "2-3 minutes", "odds": 2.2},
+          {"name": "Over 3 minutes", "odds": 1.8}
+        ]
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 342,
+      "totalPool": "₱1,245,600",
+      "mostPopularBet": "Rooster to win"
+    }
   },
   {
     "id": "vid2",
     "title": "Coco Attaque de Coq",
-    "genre": "Cockfighting", 
+    "genre": "Cockfighting",
     "file": "Coco attaque de coq CHICKENS ATTACK (720 X 1280).mp4",
     "views": 5420,
     "isLive": false,
     "duration": "2:30",
     "uploadDate": "2025-07-29",
-    "description": "Aggressive rooster attack compilation - intense cockfight moments"
+    "description": "Aggressive rooster attack compilation - intense cockfight moments",
+    "contestants": [
+      {
+        "name": "Rooster A",
+        "color": "#FF4500",
+        "weight": "5.0kg",
+        "winRate": "65%"
+      },
+      {
+        "name": "Rooster B",
+        "color": "#1E90FF",
+        "weight": "5.1kg",
+        "winRate": "60%"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Rooster A": 1.8,
+          "Rooster B": 2.0
+        }
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 128,
+      "totalPool": "₱467,200",
+      "mostPopularBet": "Rooster A to win"
+    }
   },
   {
     "id": "vid3",
@@ -30,7 +96,50 @@
     "isLive": true,
     "duration": "15:42",
     "uploadDate": "2025-07-16",
-    "description": "CEO 2025 Tekken 8 tournament - Fate Khan (Leroy) vs XO (Lidia) pool match"
+    "description": "CEO 2025 Tekken 8 tournament - Fate Khan (Leroy) vs XO (Lidia) pool match",
+    "contestants": [
+      {
+        "name": "Fate Khan",
+        "character": "Leroy",
+        "winRate": "82%",
+        "tournamentWins": 5
+      },
+      {
+        "name": "XO",
+        "character": "Lidia",
+        "winRate": "78%",
+        "tournamentWins": 3
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Fate Khan": 1.5,
+          "XO": 2.5
+        }
+      },
+      {
+        "type": "Perfect Round",
+        "options": [
+          {"name": "Yes", "odds": 3.0},
+          {"name": "No", "odds": 1.3}
+        ]
+      },
+      {
+        "type": "Round Count",
+        "options": [
+          {"name": "Under 2.5", "odds": 2.1},
+          {"name": "Over 2.5", "odds": 1.7}
+        ]
+      }
+    ],
+    "isBettingOpen": true,
+    "bettingStats": {
+      "totalBets": 892,
+      "totalPool": "₱3,567,800",
+      "mostPopularBet": "Fate Khan to win"
+    }
   },
   {
     "id": "vid4",
@@ -41,9 +150,57 @@
     "isLive": true,
     "duration": "8:15",
     "uploadDate": "2025-07-29",
-    "description": "Gilas Pilipinas send-off game highlights against Macau Black Bears"
+    "description": "Gilas Pilipinas send-off game highlights against Macau Black Bears",
+    "teams": [
+      {
+        "name": "Gilas Pilipinas",
+        "country": "Philippines",
+        "ranking": 35,
+        "form": "WWLWW"
+      },
+      {
+        "name": "Macau Black Bears",
+        "country": "Macau",
+        "ranking": 78,
+        "form": "LLWLL"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Gilas Pilipinas": 1.2,
+          "Macau Black Bears": 4.5,
+          "Draw": 3.0
+        }
+      },
+      {
+        "type": "Score Difference",
+        "options": [
+          {"name": "Gilas by 1-5", "odds": 2.5},
+          {"name": "Gilas by 6-10", "odds": 2.0},
+          {"name": "Gilas by 11+", "odds": 1.8},
+          {"name": "Macau win or draw", "odds": 3.5}
+        ]
+      },
+      {
+        "type": "First Half Winner",
+        "odds": {
+          "Gilas Pilipinas": 1.5,
+          "Macau Black Bears": 3.0,
+          "Draw": 2.2
+        }
+      }
+    ],
+    "isBettingOpen": true,
+    "bettingStats": {
+      "totalBets": 1567,
+      "totalPool": "₱6,845,300",
+      "mostPopularBet": "Gilas by 11+"
+    }
   },
-  {
+
+      {
     "id": "vid5",
     "title": "Vissel Kobe vs FC Barcelona",
     "genre": "Sports",
@@ -52,18 +209,103 @@
     "isLive": false,
     "duration": "6:30",
     "uploadDate": "2025-07-29",
-    "description": "FC Barcelona Asian Tour 2025 - Match highlights vs Vissel Kobe (3-1)"
+    "description": "FC Barcelona Asian Tour 2025 - Match highlights vs Vissel Kobe (3-1)",
+    "teams": [
+      {
+        "name": "Vissel Kobe",
+        "country": "Japan",
+        "ranking": 45,
+        "form": "LWLLW"
+      },
+      {
+        "name": "FC Barcelona",
+        "country": "Spain",
+        "ranking": 3,
+        "form": "WWWWW"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Vissel Kobe": 6.0,
+          "FC Barcelona": 1.2,
+          "Draw": 4.0
+        }
+      },
+      {
+        "type": "Score Difference",
+        "options": [
+          {"name": "Barcelona by 1-2", "odds": 2.5},
+          {"name": "Barcelona by 3+", "odds": 1.8},
+          {"name": "Vissel Kobe win or draw", "odds": 5.0}
+        ]
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 842,
+      "totalPool": "₱3,125,000",
+      "mostPopularBet": "Barcelona by 3+"
+    }
   },
   {
     "id": "vid6",
     "title": "Crazy Horse Race Recovery",
-    "genre": "Sports",
+    "genre": "Racing",
     "file": "HOW DID HE WIN FROM THERE Crazy horse race sees Bone Marra make an amazing recovery on debut (1080 X 1920).mp4",
     "views": 76540,
     "isLive": false,
     "duration": "4:20",
     "uploadDate": "2025-07-29",
-    "description": "Incredible horse racing comeback - Bone Marra's amazing debut recovery win"
+    "description": "Incredible horse racing comeback - Bone Marra's amazing debut recovery win",
+    "contestants": [
+      {
+        "name": "Bone Marra",
+        "jockey": "L. Dettori",
+        "age": 3,
+        "winRate": "60%",
+        "form": "1st"
+      },
+      {
+        "name": "Speed Bolt",
+        "jockey": "R. Moore",
+        "age": 4,
+        "winRate": "75%",
+        "form": "2nd"
+      },
+      {
+        "name": "Night Whisper",
+        "jockey": "J. Spencer",
+        "age": 5,
+        "winRate": "65%",
+        "form": "3rd"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Bone Marra": 3.5,
+          "Speed Bolt": 1.8,
+          "Night Whisper": 2.5
+        }
+      },
+      {
+        "type": "Top 3 Finish",
+        "options": [
+          {"name": "Bone Marra - Yes", "odds": 1.8},
+          {"name": "Speed Bolt - Yes", "odds": 1.2},
+          {"name": "Night Whisper - Yes", "odds": 1.5}
+        ]
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 215,
+      "totalPool": "₱875,000",
+      "mostPopularBet": "Speed Bolt to win"
+    }
   },
   {
     "id": "vid7",
@@ -74,7 +316,44 @@
     "isLive": false,
     "duration": "18:45",
     "uploadDate": "2025-07-29",
-    "description": "Star-studded charity match featuring Iniesta, Henry, IShowSpeed and other legends"
+    "description": "Star-studded charity match featuring Iniesta, Henry, IShowSpeed and other legends",
+    "teams": [
+      {
+        "name": "Team Legends",
+        "players": ["Iniesta", "Henry", "Puyol"],
+        "form": "W"
+      },
+      {
+        "name": "Team Influencers",
+        "players": ["IShowSpeed", "Chunkz", "Theo Baker"],
+        "form": "L"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Team Legends": 1.3,
+          "Team Influencers": 3.5,
+          "Draw": 5.0
+        }
+      },
+      {
+        "type": "Anytime Goal Scorer",
+        "odds": {
+          "Henry": 1.8,
+          "Iniesta": 2.5,
+          "IShowSpeed": 4.0,
+          "Other": 3.0
+        }
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 1562,
+      "totalPool": "₱5,875,000",
+      "mostPopularBet": "Team Legends to win"
+    }
   },
   {
     "id": "vid8",
@@ -85,7 +364,44 @@
     "isLive": false,
     "duration": "9:15",
     "uploadDate": "2025-07-29",
-    "description": "Messi scores twice! Full match highlights from MLS showdown"
+    "description": "Messi scores twice! Full match highlights from MLS showdown",
+    "teams": [
+      {
+        "name": "New York Red Bulls",
+        "country": "USA",
+        "ranking": 12,
+        "form": "WLWWL"
+      },
+      {
+        "name": "Inter Miami",
+        "country": "USA",
+        "ranking": 8,
+        "form": "WWWLW"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "New York Red Bulls": 2.5,
+          "Inter Miami": 1.8,
+          "Draw": 3.5
+        }
+      },
+      {
+        "type": "Messi to Score",
+        "options": [
+          {"name": "Yes", "odds": 1.5},
+          {"name": "No", "odds": 2.5}
+        ]
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 1325,
+      "totalPool": "₱6,250,000",
+      "mostPopularBet": "Messi to Score - Yes"
+    }
   },
   {
     "id": "vid9",
@@ -96,7 +412,46 @@
     "isLive": false,
     "duration": "5:50",
     "uploadDate": "2025-07-29",
-    "description": "Boxing legend Pacquiao returns - Fight highlights vs Barrios"
+    "description": "Boxing legend Pacquiao returns - Fight highlights vs Barrios",
+    "contestants": [
+      {
+        "name": "Pacquiao",
+        "country": "Philippines",
+        "winRate": "88%",
+        "weight": "147 lbs",
+        "knockouts": 62
+      },
+      {
+        "name": "Barrios",
+        "country": "USA",
+        "winRate": "85%",
+        "weight": "147 lbs",
+        "knockouts": 28
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Pacquiao": 1.5,
+          "Barrios": 2.8
+        }
+      },
+      {
+        "type": "Method",
+        "options": [
+          {"name": "KO/TKO", "odds": 2.0},
+          {"name": "Decision", "odds": 2.5},
+          {"name": "Technical", "odds": 6.0}
+        ]
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 987,
+      "totalPool": "₱4,125,000",
+      "mostPopularBet": "Pacquiao to win"
+    }
   },
   {
     "id": "vid11",
@@ -107,6 +462,193 @@
     "isLive": false,
     "duration": "42:30",
     "uploadDate": "2025-07-29",
-    "description": "Complete series highlights - T1 vs Gen.G LCK 2025 championship match"
+    "description": "Complete series highlights - T1 vs Gen.G LCK 2025 championship match",
+    "teams": [
+      {
+        "name": "T1",
+        "region": "Korea",
+        "worldRanking": 2,
+        "form": "WWLWW"
+      },
+      {
+        "name": "Gen.G",
+        "region": "Korea",
+        "worldRanking": 1,
+        "form": "LWWLW"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Series Winner",
+        "odds": {
+          "T1": 1.8,
+          "Gen.G": 2.0
+        }
+      },
+      {
+        "type": "Total Maps",
+        "options": [
+          {"name": "Under 3.5", "odds": 2.2},
+          {"name": "Over 3.5", "odds": 1.7}
+        ]
+      }
+    ],
+    "isBettingOpen": false,
+    "bettingStats": {
+      "totalBets": 765,
+      "totalPool": "₱3,875,000",
+      "mostPopularBet": "T1 to win"
+    }
+  },
+
+
+
+
+
+
+
+
+  {
+    "id": "vid12",
+    "title": "Race Highlights 2025 Belgian Grand Prix",
+    "genre": "Racing",
+    "file": "Race Highlights 2025 Belgian Grand Prix (720 X 1280 50fps).mp4",
+    "views": 0,
+    "isLive": false,
+    "duration": "10:30",
+    "uploadDate": "2025-07-30",
+    "description": "All the intense overtakes and crashes from the 2025 Belgian GP",
+    "contestants": [
+      {
+        "name": "Verstappen",
+        "team": "Red Bull Racing",
+        "carNumber": 1,
+        "position": 1,
+        "points": 256
+      },
+      {
+        "name": "Leclerc",
+        "team": "Ferrari",
+        "carNumber": 16,
+        "position": 2,
+        "points": 198
+      },
+      {
+        "name": "Hamilton",
+        "team": "Mercedes",
+        "carNumber": 44,
+        "position": 3,
+        "points": 187
+      },
+      {
+        "name": "Norris",
+        "team": "McLaren",
+        "carNumber": 4,
+        "position": 4,
+        "points": 165
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Verstappen": 1.8,
+          "Leclerc": 3.5,
+          "Hamilton": 4.0,
+          "Norris": 5.0
+        }
+      },
+      {
+        "type": "Podium Finish",
+        "options": [
+          {"name": "Verstappen - Yes", "odds": 1.2},
+          {"name": "Leclerc - Yes", "odds": 1.8},
+          {"name": "Hamilton - Yes", "odds": 2.0},
+          {"name": "Norris - Yes", "odds": 2.5}
+        ]
+      },
+      {
+        "type": "Fastest Lap",
+        "odds": {
+          "Verstappen": 2.0,
+          "Leclerc": 3.0,
+          "Hamilton": 3.5,
+          "Norris": 4.0
+        }
+      },
+      {
+        "type": "Safety Car",
+        "options": [
+          {"name": "Yes", "odds": 1.8},
+          {"name": "No", "odds": 2.0}
+        ]
+      }
+    ],
+    "isBettingOpen": true,
+    "bettingStats": {
+      "totalBets": 723,
+      "totalPool": "₱3,125,400",
+      "mostPopularBet": "Verstappen to win"
+    }
+  },
+  {
+    "id": "vid-hacked",
+    "title": "🔴 SYSTEM BREACH: Championship Boxing Match",
+    "genre": "Sports",
+    "file": "boxing-match-hacked.mp4",
+    "views": 999999,
+    "isLive": true,
+    "duration": "LIVE",
+    "uploadDate": "2025-07-30",
+    "description": "⚠️ UNAUTHORIZED ACCESS DETECTED - This stream appears to have been compromised. Odds manipulation detected. Proceed with caution...",
+    "isHacked": true,
+    "contestants": [
+      { 
+        "name": "Mike 'Thunder' Johnson", 
+        "country": "USA", 
+        "winRate": "85%", 
+        "weight": "220 lbs",
+        "form": "5 wins in a row"
+      },
+      { 
+        "name": "Ivan 'Storm' Petrov", 
+        "country": "Russia", 
+        "winRate": "82%", 
+        "weight": "218 lbs",
+        "form": "Knockout specialist"
+      }
+    ],
+    "betOptions": [
+      {
+        "type": "Winner",
+        "odds": {
+          "Mike Johnson": "1.85",
+          "Ivan Petrov": "2.10"
+        }
+      },
+      {
+        "type": "Round Betting",
+        "odds": {
+          "Round 1-3": "3.50",
+          "Round 4-6": "2.80",
+          "Round 7+": "1.95",
+          "Goes Distance": "4.20"
+        }
+      },
+      {
+        "type": "Method",
+        "odds": {
+          "Knockout": "2.40",
+          "Decision": "1.75",
+          "Technical": "5.50"
+        }
+      }
+    ],
+    "isBettingOpen": true,
+    "bettingStats": {
+      "totalBets": 9999,
+      "totalPool": "₱99,999,999",
+      "mostPopularBet": "SYSTEM ERROR"
+    }
   }
 ]

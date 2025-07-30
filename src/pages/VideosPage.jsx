@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 const VideosPage = () => {
   const [videos, setVideos] = useState([]);
   const [activeTab, setActiveTab] = useState('All');
-  const [loading, setLoading] = useState(false); // Changed to false for demo
+  const [loading, setLoading] = useState(false);
   const [expandedVideo, setExpandedVideo] = useState(null);
   const navigate = useNavigate();
 
@@ -16,11 +16,11 @@ const VideosPage = () => {
     { id: 'Sports', name: 'Sports', icon: '⚽' },
     { id: 'Esports', name: 'E-Sports', icon: '🎮' },
     { id: 'Cockfighting', name: 'Cockfighting', icon: '🐓' },
+    { id: 'Racing', name: 'Racing', icon: '🏎️' },
     { id: 'Promotions', name: 'Promotions', icon: '🎁' },
   ];
 
   useEffect(() => {
-    // Load videos from JSON database
     const loadVideos = async () => {
       try {
         setLoading(true);
@@ -32,8 +32,8 @@ const VideosPage = () => {
         // Fallback to mock data if JSON fails
         const mockVideos = Array(4).fill().map((_, i) => ({
           id: `mock${i + 1}`,
-          title: ['Football Match', 'Cockfight Event', 'Esports Tournament', 'Boxing Match'][i % 4],
-          genre: ['Sports', 'Cockfighting', 'Esports', 'Sports'][i % 4],
+          title: ['Football Match', 'Cockfight Event', 'Esports Tournament', 'Racing'][i % 4],
+          genre: ['Sports', 'Cockfighting', 'Esports', 'Racing'][i % 4],
           views: Math.floor(Math.random() * 10000),
           isLive: i % 3 === 0,
           file: `video${i % 4 + 1}.mp4`,
@@ -69,14 +69,13 @@ const VideosPage = () => {
     >
       <Navbar tabs={['Sportsbook', 'Live now', 'Casino', 'Promotions']} />
 
-      {/* MAIN CONTENT - Adjusted padding-top for fixed navbar */}
+      {/* MAIN CONTENT */}
       <div className="flex-1 pt-28 pb-8 pl-8 pr-4 overflow-y-auto">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="text-orange-400 text-xl">Loading videos...</div>
           </div>
         ) : (
-          /* Video Grid */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredVideos.map(video => (
               <VideoCard 
@@ -91,7 +90,7 @@ const VideosPage = () => {
         )}
       </div>
 
-      {/* SIDEBAR - Also adjusted for fixed navbar */}
+      {/* SIDEBAR */}
       <div className="w-72 pt-28 pr-8 pb-8 pl-4 border-l border-gray-700 hidden lg:block bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 sticky top-0 h-screen z-40">
         <div className="sticky top-28">
           <h3 className="text-lg font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
@@ -148,42 +147,66 @@ const VideosPage = () => {
 };
 
 const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
-  const [odds, setOdds] = useState([
-    { id: 1, name: 'Home Win', value: (Math.random() * 3 + 1).toFixed(2) },
-    { id: 2, name: 'Draw', value: (Math.random() * 4 + 2).toFixed(2) },
-    { id: 3, name: 'Away Win', value: (Math.random() * 3 + 1).toFixed(2) },
-  ]);
-
-  const matchDetails = {
-    'Football Match': {
-      teams: ['Team A', 'Team B'],
-      time: '15:00',
-      venue: 'Stadium'
-    },
-    'Cockfight Event': {
-      teams: ['Rooster A', 'Rooster B'],
-      time: '20:00',
-      venue: 'Cockpit Arena'
-    },
-    'Esports Tournament': {
-      teams: ['Team X', 'Team Y'],
-      time: '18:30',
-      venue: 'Online'
-    },
-    'Boxing Match': {
-      teams: ['Fighter 1', 'Fighter 2'],
-      time: '22:00',
-      venue: 'MGM Grand'
+  const renderParticipants = () => {
+    if (!video.contestants && !video.teams) return null;
+    
+    const participants = video.teams || video.contestants;
+    
+    if (video.genre === 'Racing') {
+      return (
+        <div className="mt-2">
+          <h4 className="text-xs text-gray-400 mb-1">Drivers:</h4>
+          <div className="grid grid-cols-2 gap-1">
+            {participants.slice(0, 4).map((p, i) => (
+              <div key={i} className="text-xs truncate">
+                {p.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
     }
+    
+    return (
+      <div className="mt-2">
+        <h4 className="text-xs text-gray-400 mb-1">Participants:</h4>
+        <div className="flex justify-between">
+          {participants.slice(0, 2).map((p, i) => (
+            <div key={i} className="text-xs">
+              {p.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   };
 
-  const details = matchDetails[video.title] || { teams: ['Team A', 'Team B'], time: '--:--', venue: 'Unknown' };
+  const renderOdds = () => {
+    if (!video.betOptions || video.betOptions.length === 0) return null;
+    
+    const winnerOdds = video.betOptions.find(o => o.type === 'Winner');
+    if (!winnerOdds) return null;
+    
+    return (
+      <div className="mt-2">
+        <h4 className="text-xs text-gray-400 mb-1">Winner Odds:</h4>
+        <div className="grid grid-cols-2 gap-1">
+          {Object.entries(winnerOdds.odds).map(([name, odds]) => (
+            <div key={name} className="text-xs flex justify-between">
+              <span>{name}</span>
+              <span className="font-bold">{odds}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className={`bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-md overflow-hidden transition-all duration-300 ${
       isExpanded ? 'ring-2 ring-orange-500' : 'hover:ring-1 hover:ring-orange-400'
     }`}>
-      {/* Video Thumbnail - Now shows actual video preview */}
+      {/* Video Thumbnail */}
       <div 
         className="relative bg-black w-full aspect-video flex items-center justify-center cursor-pointer group"
         onClick={onVideoClick}
@@ -198,11 +221,9 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
         >
           <source src={`/videos/${video.file}`} type="video/mp4" />
         </video>
-        {/* Fallback if video fails to load */}
         <div className="absolute inset-0 items-center justify-center text-gray-500 text-lg hidden">
           Video Preview
         </div>
-        {/* Play button overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="w-16 h-16 bg-orange-500/80 rounded-full flex items-center justify-center">
             <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -232,51 +253,8 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
         <p className="text-sm text-gray-400 mb-2">{video.genre}</p>
         <p className="text-xs text-gray-500 mb-3 line-clamp-2">{video.description}</p>
         
-        {/* Video Stats */}
-        <div className="mb-3 text-sm">
-          <div className="flex justify-between mb-1">
-            <span className="text-gray-400">Views:</span>
-            <span className="font-medium">{video.views.toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between mb-1">
-            <span className="text-gray-400">Duration:</span>
-            <span className="font-medium">{video.duration}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-400">Uploaded:</span>
-            <span className="font-medium">{new Date(video.uploadDate).toLocaleDateString()}</span>
-          </div>
-        </div>
-        
-        {/* Betting Odds - Shown only when expanded */}
-        {isExpanded && (
-          <div className="mt-4 border-t border-gray-700 pt-4">
-            <h4 className="text-sm font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 mb-3">
-              BETTING ODDS
-            </h4>
-            <div className="grid grid-cols-3 gap-2 mb-4">
-              {odds.map(odd => (
-                <button 
-                  key={odd.id}
-                  className="bg-gradient-to-b from-zinc-700 to-zinc-800 hover:bg-gradient-to-b hover:from-orange-500 hover:to-orange-600 hover:text-black transition py-2 rounded text-center border border-gray-700"
-                >
-                  <div className="text-xs">{odd.name}</div>
-                  <div className="font-bold">{odd.value}</div>
-                </button>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <input 
-                type="number" 
-                placeholder="Stake" 
-                className="flex-1 bg-zinc-700 border border-gray-600 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
-              />
-              <button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-black font-bold px-4 py-2 rounded text-sm transition">
-                Place Bet
-              </button>
-            </div>
-          </div>
-        )}
+        {renderParticipants()}
+        {renderOdds()}
 
         <button 
           onClick={onExpand}
@@ -284,7 +262,7 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
             isExpanded ? 'font-bold' : ''
           }`}
         >
-          {isExpanded ? 'Hide odds' : 'Show betting odds'}
+          {isExpanded ? 'Hide details' : 'Show details'}
           <svg 
             className={`ml-1 w-4 h-4 transition-transform ${
               isExpanded ? 'rotate-180' : ''

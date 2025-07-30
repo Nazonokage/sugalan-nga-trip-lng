@@ -12,13 +12,15 @@ const StreamingPage = () => {
   const [loading, setLoading] = useState(true);
   const [betAmount, setBetAmount] = useState('');
   const [selectedOdd, setSelectedOdd] = useState(null);
+  const [activeBetTab, setActiveBetTab] = useState(0);
 
-  // Mock betting odds
-  const [odds, setOdds] = useState([
-    { id: 1, name: 'Home Win', value: (Math.random() * 3 + 1).toFixed(2) },
-    { id: 2, name: 'Draw', value: (Math.random() * 4 + 2).toFixed(2) },
-    { id: 3, name: 'Away Win', value: (Math.random() * 3 + 1).toFixed(2) },
-  ]);
+  // src/pages/StreamingPage.jsx
+// Add this near the top of the component, after loading the video
+  useEffect(() => {
+    if (video && video.id === "vid-hacked") {
+      navigate("/streaming/vid-hacked");
+    }
+  }, [video, navigate]);
 
   useEffect(() => {
     const loadVideo = async () => {
@@ -62,6 +64,158 @@ const StreamingPage = () => {
     alert(`Bet placed!\nAmount: ₱${betAmount}\nOdds: ${selectedOdd.value}\nPotential Win: ₱${potentialWin}`);
     setBetAmount('');
     setSelectedOdd(null);
+  };
+
+  const renderParticipants = () => {
+    if (!video.contestants && !video.teams) return null;
+    
+    const participants = video.teams || video.contestants;
+    
+    if (video.genre === 'Racing') {
+      return (
+        <div className="bg-zinc-800/50 rounded-lg p-4 mb-6">
+          <h4 className="text-lg font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+            Race Participants
+          </h4>
+          <div className="grid grid-cols-2 gap-3">
+            {participants.map((p, i) => (
+              <div key={i} className="bg-zinc-700/30 p-3 rounded-lg">
+                <div className="font-bold">{p.name}</div>
+                <div className="text-sm text-gray-400">{p.team}</div>
+                <div className="text-sm">Position: {p.position}</div>
+                <div className="text-sm">Points: {p.points}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    return (
+      <div className="bg-zinc-800/50 rounded-lg p-4 mb-6">
+        <h4 className="text-lg font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+          {video.teams ? 'Teams' : 'Contestants'}
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {participants.map((p, i) => (
+            <div key={i} className="bg-zinc-700/30 p-4 rounded-lg">
+              <div className="font-bold text-lg">{p.name}</div>
+              {p.character && <div className="text-sm text-gray-400">Character: {p.character}</div>}
+              {p.team && <div className="text-sm text-gray-400">Team: {p.team}</div>}
+              {p.country && <div className="text-sm text-gray-400">Country: {p.country}</div>}
+              {p.winRate && <div className="text-sm">Win Rate: {p.winRate}</div>}
+              {p.weight && <div className="text-sm">Weight: {p.weight}</div>}
+              {p.form && <div className="text-sm">Form: {p.form}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderBetOptions = () => {
+    if (!video.betOptions || video.betOptions.length === 0) {
+      return (
+        <div className="bg-zinc-800/50 rounded-lg p-4 text-center">
+          <p className="text-gray-400">No betting options available for this event</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-lg p-6 sticky top-32">
+        <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+          {video.betOptions.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveBetTab(index)}
+              className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
+                activeBetTab === index
+                  ? 'bg-orange-500 text-black font-bold'
+                  : 'bg-zinc-700 text-gray-300'
+              }`}
+            >
+              {option.type}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-3 mb-6">
+          {video.betOptions[activeBetTab].options ? (
+            video.betOptions[activeBetTab].options.map((option, i) => (
+              <button 
+                key={i}
+                onClick={() => setSelectedOdd({ name: option.name, value: option.odds, type: video.betOptions[activeBetTab].type })}
+                className={`w-full flex justify-between items-center p-3 rounded-lg border transition ${
+                  selectedOdd?.name === option.name && selectedOdd?.type === video.betOptions[activeBetTab].type
+                    ? 'bg-orange-500/30 border-orange-500 text-orange-400'
+                    : 'bg-zinc-700/50 border-gray-600 hover:bg-zinc-700/70'
+                }`}
+              >
+                <span className="text-sm">{option.name}</span>
+                <span className="font-bold text-lg">{option.odds}</span>
+              </button>
+            ))
+          ) : (
+            Object.entries(video.betOptions[activeBetTab].odds).map(([name, odds]) => (
+              <button 
+                key={name}
+                onClick={() => setSelectedOdd({ name, value: odds, type: video.betOptions[activeBetTab].type })}
+                className={`w-full flex justify-between items-center p-3 rounded-lg border transition ${
+                  selectedOdd?.name === name && selectedOdd?.type === video.betOptions[activeBetTab].type
+                    ? 'bg-orange-500/30 border-orange-500 text-orange-400'
+                    : 'bg-zinc-700/50 border-gray-600 hover:bg-zinc-700/70'
+                }`}
+              >
+                <span className="text-sm">{name}</span>
+                <span className="font-bold text-lg">{odds}</span>
+              </button>
+            ))
+          )}
+        </div>
+
+        {/* Rest of the betting form remains the same */}
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm text-gray-400 mb-2">Bet Amount (₱)</label>
+            <input 
+              type="number" 
+              value={betAmount}
+              onChange={(e) => setBetAmount(e.target.value)}
+              placeholder="Enter amount" 
+              className="w-full bg-zinc-700 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+          
+          {selectedOdd && betAmount && (
+            <div className="bg-zinc-700/30 rounded-lg p-3 text-sm">
+              <div className="flex justify-between mb-1">
+                <span className="text-gray-400">Potential Win:</span>
+                <span className="font-bold text-green-400">
+                  ₱{(parseFloat(betAmount) * parseFloat(selectedOdd.value)).toFixed(2)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-400">Total Return:</span>
+                <span className="font-bold">
+                  ₱{(parseFloat(betAmount) * parseFloat(selectedOdd.value) + parseFloat(betAmount)).toFixed(2)}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <button 
+            onClick={handleBetSubmit}
+            disabled={!selectedOdd || !betAmount}
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black font-bold py-3 rounded-lg transition"
+          >
+            PLACE BET
+          </button>
+        </div>
+
+        {/* Live Stats and Quick Links sections remain the same */}
+      </div>
+    );
   };
 
   if (loading) {
@@ -166,6 +320,9 @@ const StreamingPage = () => {
               </p>
             </div>
 
+            {/* Participants Section */}
+            {renderParticipants()}
+
             {/* Related Videos */}
             {relatedVideos.length > 0 && (
               <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-lg p-6">
@@ -215,122 +372,7 @@ const StreamingPage = () => {
           </div>
 
           {/* Betting Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-lg p-6 sticky top-32">
-              <h3 className="text-lg font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-                LIVE BETTING
-              </h3>
-              
-              {/* Betting Odds */}
-              <div className="space-y-3 mb-6">
-                {odds.map(odd => (
-                  <button 
-                    key={odd.id}
-                    onClick={() => setSelectedOdd(odd)}
-                    className={`w-full flex justify-between items-center p-3 rounded-lg border transition ${
-                      selectedOdd?.id === odd.id
-                        ? 'bg-orange-500/30 border-orange-500 text-orange-400'
-                        : 'bg-zinc-700/50 border-gray-600 hover:bg-zinc-700/70'
-                    }`}
-                  >
-                    <span className="text-sm">{odd.name}</span>
-                    <span className="font-bold text-lg">{odd.value}</span>
-                  </button>
-                ))}
-              </div>
-
-              {/* Bet Input */}
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm text-gray-400 mb-2">Bet Amount (₱)</label>
-                  <input 
-                    type="number" 
-                    value={betAmount}
-                    onChange={(e) => setBetAmount(e.target.value)}
-                    placeholder="Enter amount" 
-                    className="w-full bg-zinc-700 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
-                
-                {selectedOdd && betAmount && (
-                  <div className="bg-zinc-700/30 rounded-lg p-3 text-sm">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-gray-400">Potential Win:</span>
-                      <span className="font-bold text-green-400">
-                        ₱{(parseFloat(betAmount) * parseFloat(selectedOdd.value)).toFixed(2)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Total Return:</span>
-                      <span className="font-bold">
-                        ₱{(parseFloat(betAmount) * parseFloat(selectedOdd.value) + parseFloat(betAmount)).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                <button 
-                  onClick={handleBetSubmit}
-                  disabled={!selectedOdd || !betAmount}
-                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-black font-bold py-3 rounded-lg transition"
-                >
-                  PLACE BET
-                </button>
-              </div>
-
-              {/* Live Stats */}
-              <div className="mt-8 pt-6 border-t border-gray-700">
-                <h4 className="text-sm font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-                  LIVE STATS
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Active Bets:</span>
-                    <span className="font-semibold">47</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Total Pool:</span>
-                    <span className="font-semibold">₱2,847,230</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Biggest Bet:</span>
-                    <span className="font-semibold">₱125,000</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Recent Payout:</span>
-                    <span className="font-semibold text-green-400">₱89,450</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Links */}
-              <div className="mt-8 pt-6 border-t border-gray-700">
-                <h4 className="text-sm font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-                  QUICK LINKS
-                </h4>
-                <div className="space-y-2">
-                  <button 
-                    onClick={() => navigate('/videos')}
-                    className="w-full text-left bg-zinc-700/50 hover:bg-zinc-700/70 px-3 py-2 rounded text-sm transition"
-                  >
-                    Browse All Events
-                  </button>
-                  <button 
-                    onClick={() => navigate('/promotions')}
-                    className="w-full text-left bg-zinc-700/50 hover:bg-zinc-700/70 px-3 py-2 rounded text-sm transition"
-                  >
-                    View Promotions
-                  </button>
-                  <button 
-                    onClick={() => navigate('/casino')}
-                    className="w-full text-left bg-zinc-700/50 hover:bg-zinc-700/70 px-3 py-2 rounded text-sm transition"
-                  >
-                    Casino Games
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          {renderBetOptions()}
         </div>
       </div>
     </div>
