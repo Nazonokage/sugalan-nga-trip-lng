@@ -24,7 +24,7 @@ const VideosPage = () => {
     const loadVideos = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/assets/videos.json');
+        const response = await fetch('../assets/videos.json');
         const videosData = await response.json();
         setVideos(videosData);
       } catch (error) {
