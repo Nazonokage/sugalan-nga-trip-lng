@@ -8,5 +8,6 @@ export default defineConfig({
     port: 5173,
     strictPort: true, // Fail if 5173 is taken
     open: true,      // Don't auto-open browser
+    allowedHosts: ['.ngrok-free.app']
   },
 })

@@ -9,7 +9,16 @@ const VideosPage = () => {
   const [activeTab, setActiveTab] = useState('All');
   const [loading, setLoading] = useState(false);
   const [expandedVideo, setExpandedVideo] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const tabs = [
     { id: 'All', name: 'All Events', icon: '📺' },
@@ -29,7 +38,6 @@ const VideosPage = () => {
         setVideos(videosData);
       } catch (error) {
         console.error('Error loading videos:', error);
-        // Fallback to mock data if JSON fails
         const mockVideos = Array(4).fill().map((_, i) => ({
           id: `mock${i + 1}`,
           title: ['Football Match', 'Cockfight Event', 'Esports Tournament', 'Racing'][i % 4],
@@ -60,7 +68,7 @@ const VideosPage = () => {
 
   return (
     <div 
-      className="min-h-screen bg-zinc-900 text-white font-sans relative overflow-hidden flex"
+      className="min-h-screen bg-zinc-900 text-white font-sans relative overflow-hidden flex flex-col lg:flex-row"
       style={{
         backgroundImage: `url(${hexBg})`,
         backgroundSize: 'auto',
@@ -69,14 +77,38 @@ const VideosPage = () => {
     >
       <Navbar tabs={['Sportsbook', 'Live now', 'Casino', 'Promotions']} />
 
+      {/* Mobile Tabs */}
+    {isMobile && (
+      <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4 pt-4 pb-2 border-b border-gray-700 bg-zinc-900">
+        <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs transition-colors ${
+                activeTab === tab.id
+                  ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-black font-bold'
+                  : 'bg-zinc-700 text-gray-300'
+              }`}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+)}
+
+
+
       {/* MAIN CONTENT */}
-      <div className="flex-1 pt-28 pb-8 pl-8 pr-4 overflow-y-auto">
+      <div className="flex-1 pt-40   sm:pt-28 pb-8 px-4 sm:pl-8 sm:pr-4 overflow-y-auto">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="text-orange-400 text-xl">Loading videos...</div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredVideos.map(video => (
               <VideoCard 
                 key={video.id}
@@ -90,55 +122,57 @@ const VideosPage = () => {
         )}
       </div>
 
-      {/* SIDEBAR */}
-      <div className="w-72 pt-28 pr-8 pb-8 pl-4 border-l border-gray-700 hidden lg:block bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 sticky top-0 h-screen z-40">
-        <div className="sticky top-28">
-          <h3 className="text-lg font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-            CATEGORIES
-          </h3>
-          <div className="space-y-2">
-            {tabs.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-md transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-gradient-to-r from-orange-500/30 to-orange-600/20 text-orange-400 font-semibold border border-orange-500/30'
-                    : 'text-gray-300 hover:bg-zinc-700/50 hover:text-white'
-                }`}
-              >
-                <span className="text-lg">{tab.icon}</span>
-                <span>{tab.name}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Quick Betting Stats */}
-          <div className="mt-8">
+      {/* SIDEBAR - Desktop only */}
+      {!isMobile && (
+        <div className="w-72 pt-28 pr-8 pb-8 pl-4 border-l border-gray-700 bg-gradient-to-b from-zinc-800/90 to-zinc-900/90 sticky top-0 h-screen z-40">
+          <div className="sticky top-28">
             <h3 className="text-lg font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-              LIVE BETS
+              CATEGORIES
             </h3>
-            <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-lg p-4 shadow-lg">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-400">Active Bets:</span>
-                <span className="font-semibold">24</span>
-              </div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-400">Total Wagered:</span>
-                <span className="font-semibold">₱1,245,678</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Biggest Win:</span>
-                <span className="font-semibold text-green-400">₱89,450</span>
+            <div className="space-y-2">
+              {tabs.map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-md transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-gradient-to-r from-orange-500/30 to-orange-600/20 text-orange-400 font-semibold border border-orange-500/30'
+                      : 'text-gray-300 hover:bg-zinc-700/50 hover:text-white'
+                  }`}
+                >
+                  <span className="text-lg">{tab.icon}</span>
+                  <span>{tab.name}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Quick Betting Stats */}
+            <div className="mt-8">
+              <h3 className="text-lg font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+                LIVE BETS
+              </h3>
+              <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-lg p-4 shadow-lg">
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-gray-400">Active Bets:</span>
+                  <span className="font-semibold">24</span>
+                </div>
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-gray-400">Total Wagered:</span>
+                  <span className="font-semibold">₱1,245,678</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Biggest Win:</span>
+                  <span className="font-semibold text-green-400">₱89,450</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Floating Hexagon Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(isMobile ? 6 : 12)].map((_, i) => (
           <Hexagon key={i} index={i} />
         ))}
       </div>
@@ -206,7 +240,6 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
     <div className={`bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-gray-700 rounded-md overflow-hidden transition-all duration-300 ${
       isExpanded ? 'ring-2 ring-orange-500' : 'hover:ring-1 hover:ring-orange-400'
     }`}>
-      {/* Video Thumbnail */}
       <div 
         className="relative bg-black w-full aspect-video flex items-center justify-center cursor-pointer group"
         onClick={onVideoClick}
@@ -225,8 +258,8 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
           Video Preview
         </div>
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="w-16 h-16 bg-orange-500/80 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 bg-orange-500/80 rounded-full flex items-center justify-center">
+            <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z"/>
             </svg>
           </div>
@@ -245,12 +278,11 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
         </div>
       </div>
 
-      {/* Video Info */}
-      <div className="p-4">
-        <h3 className="text-lg font-semibold mb-1 cursor-pointer hover:text-orange-400 transition" onClick={onVideoClick}>
+      <div className="p-3 sm:p-4">
+        <h3 className="text-base sm:text-lg font-semibold mb-1 cursor-pointer hover:text-orange-400 transition" onClick={onVideoClick}>
           {video.title}
         </h3>
-        <p className="text-sm text-gray-400 mb-2">{video.genre}</p>
+        <p className="text-xs sm:text-sm text-gray-400 mb-2">{video.genre}</p>
         <p className="text-xs text-gray-500 mb-3 line-clamp-2">{video.description}</p>
         
         {renderParticipants()}
@@ -258,13 +290,13 @@ const VideoCard = ({ video, isExpanded, onExpand, onVideoClick }) => {
 
         <button 
           onClick={onExpand}
-          className={`mt-3 text-sm flex items-center text-orange-400 hover:text-orange-300 transition ${
+          className={`mt-3 text-xs sm:text-sm flex items-center text-orange-400 hover:text-orange-300 transition ${
             isExpanded ? 'font-bold' : ''
           }`}
         >
           {isExpanded ? 'Hide details' : 'Show details'}
           <svg 
-            className={`ml-1 w-4 h-4 transition-transform ${
+            className={`ml-1 w-3 h-3 sm:w-4 sm:h-4 transition-transform ${
               isExpanded ? 'rotate-180' : ''
             }`}
             fill="none" 

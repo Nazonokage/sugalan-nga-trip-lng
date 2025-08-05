@@ -1,9 +1,20 @@
 // src/pages/WelcomePage.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import hexBg from '../assets/hexellence-1920x1080.png';
 
 const WelcomePage = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div
       className="min-h-screen bg-zinc-900 text-white font-sans relative overflow-hidden"
@@ -15,72 +26,71 @@ const WelcomePage = () => {
     >
       <Navbar />
 
-      {/* HERO SECTION - Now starts from top without navbar spacing */}
-      <section className="relative w-full h-screen flex items-center justify-center px-8 overflow-hidden">
-        {/* Floating Decorative Hexagons - Animated */}
+      <section className="relative w-full h-screen flex items-center justify-center px-4 sm:px-8 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(8)].map((_, i) => (
             <Hexagon key={i} index={i} />
           ))}
         </div>
 
-        {/* Background gradient effects */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute bottom-28 left-20 w-28 h-56 bg-gradient-to-t from-orange-500/20 to-transparent opacity-30 blur-sm animate-pulse"></div>
-          <div className="absolute top-12 right-[28%] w-36 h-64 bg-gradient-to-b from-orange-400/10 to-transparent opacity-40 blur-md animate-pulse"></div>
-          <div className="absolute bottom-20 right-16 w-28 h-52 bg-gradient-to-t from-orange-500/20 to-transparent opacity-30 blur-sm animate-pulse"></div>
-          <div className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full bg-orange-500/10 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-28 left-4 sm:left-20 w-28 h-56 bg-gradient-to-t from-orange-500/20 to-transparent opacity-30 blur-sm animate-pulse"></div>
+          <div className="absolute top-12 right-[10%] sm:right-[28%] w-24 sm:w-36 h-64 bg-gradient-to-b from-orange-400/10 to-transparent opacity-40 blur-md animate-pulse"></div>
+          <div className="absolute bottom-20 right-4 sm:right-16 w-28 h-52 bg-gradient-to-t from-orange-500/20 to-transparent opacity-30 blur-sm animate-pulse"></div>
+          <div className="absolute top-1/2 left-[10%] sm:left-1/4 w-40 sm:w-64 h-64 rounded-full bg-orange-500/10 blur-3xl animate-pulse"></div>
         </div>
 
-        {/* Main content */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-start">
-          <h1 className="text-6xl font-bold mb-6 tracking-tight">
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-start px-4 sm:px-0">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 tracking-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
               Ultimate Betting
             </span>
             <br />
             Experience
           </h1>
-          <p className="text-xl text-gray-300 mb-10 max-w-2xl">
+          <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-10 max-w-2xl">
             Join millions of players worldwide in the most exciting sports betting and casino platform.
           </p>
-          <button className="relative overflow-hidden group bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-black px-8 py-4 font-bold rounded-sm transition-all duration-300 shadow-lg hover:shadow-orange-500/30">
-            <span className="relative z-10">GET STARTED</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          </button>
+      <Link to="/videos">
+        <button className="relative overflow-hidden group bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-black px-6 py-3 sm:px-8 sm:py-4 font-bold rounded-sm transition-all duration-300 shadow-lg hover:shadow-orange-500/30">
+          <span className="relative z-10">GET STARTED</span>
+          <span className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        </button>
+      </Link>
+
         </div>
 
-        {/* PROMOTION BLOCK */}
-        <div className="absolute bottom-20 right-[8%] transform scale-[1.15] z-20 group">
-          <div className="skew-x-12 w-[400px] h-[220px] bg-gradient-to-br from-zinc-800/90 to-zinc-900/90 border border-gray-600 shadow-2xl overflow-hidden relative transition-all duration-500 group-hover:shadow-orange-500/50 group-hover:border-orange-400/30">
-            <div
-              className="w-full h-full -skew-x-12 p-6 flex flex-col justify-between text-white"
-              style={{
-                backgroundImage: `linear-gradient(rgba(24, 24, 27, 0.8), rgba(24, 24, 27, 0.8)), url(${hexBg})`,
-                backgroundBlendMode: 'overlay',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'repeat',
-              }}
-            >
-              <div>
-                <h2 className="text-3xl font-bold mb-1">Live Now</h2>
-                <h3 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-                  Exclusive Promotions
-                </h3>
-                <p className="text-sm text-gray-300 mt-2">
-                  Get up to <span className="text-orange-400 font-bold">200% bonus</span> on your first deposit and special rewards for loyal players.
-                </p>
+        {!isMobile && (
+          <div className="absolute bottom-20 right-[8%] transform scale-[1.15] z-20 group">
+            <div className="skew-x-12 w-[300px] sm:w-[400px] h-[180px] sm:h-[220px] bg-gradient-to-br from-zinc-800/90 to-zinc-900/90 border border-gray-600 shadow-2xl overflow-hidden relative transition-all duration-500 group-hover:shadow-orange-500/50 group-hover:border-orange-400/30">
+              <div
+                className="w-full h-full -skew-x-12 p-4 sm:p-6 flex flex-col justify-between text-white"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(24, 24, 27, 0.8), rgba(24, 24, 27, 0.8)), url(${hexBg})`,
+                  backgroundBlendMode: 'overlay',
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'repeat',
+                }}
+              >
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-1">Live Now</h2>
+                  <h3 className="text-lg sm:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+                    Exclusive Promotions
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-300 mt-2">
+                    Get up to <span className="text-orange-400 font-bold">200% bonus</span> on your first deposit and special rewards for loyal players.
+                  </p>
+                </div>
+                <button className="relative overflow-hidden group-hover:bg-orange-500 bg-orange-400 text-black px-4 py-2 mt-4 font-bold rounded-sm transition-all duration-300 w-fit">
+                  <span className="relative z-10">CLAIM BONUS</span>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                </button>
               </div>
-              <button className="relative overflow-hidden group-hover:bg-orange-500 bg-orange-400 text-black px-5 py-2 mt-4 font-bold rounded-sm transition-all duration-300 w-fit">
-                <span className="relative z-10">CLAIM BONUS</span>
-                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-              </button>
             </div>
           </div>
-        </div>
+        )}
       </section>
 
-      {/* Custom animations */}
       <style jsx global>{`
         @keyframes float {
           0% {
